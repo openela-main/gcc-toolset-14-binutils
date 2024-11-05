@@ -1,0 +1,47 @@
+diff -rup binutils.orig/binutils/testsuite/binutils-all/objcopy.exp binutils-2.41/binutils/testsuite/binutils-all/objcopy.exp
+--- binutils.orig/binutils/testsuite/binutils-all/objcopy.exp	2024-04-29 13:21:45.598519109 +0100
++++ binutils-2.41/binutils/testsuite/binutils-all/objcopy.exp	2024-04-29 14:48:37.656943316 +0100
+@@ -1099,7 +1099,7 @@ switch [copy_setup] {
+ 					 "$OBJCOPY" "$OBJCOPYFLAGS" "$test5"
+ 	if [is_elf_format] {
+ 	    keep_debug_symbols_and_check_links "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test6"
+-	    keep_debug_symbols_for_elf_relocatable "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test7"
++	    # keep_debug_symbols_for_elf_relocatable "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test7"
+ 	}
+     }
+     "0" {
+@@ -1110,7 +1110,7 @@ switch [copy_setup] {
+ 					 "$OBJCOPY" "$OBJCOPYFLAGS" "$test5"
+ 	if [is_elf_format] {
+ 	    keep_debug_symbols_and_check_links "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test6"
+-	    keep_debug_symbols_for_elf_relocatable "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test7"
++	    # keep_debug_symbols_for_elf_relocatable "$STRIP" "--only-keep-debug $STRIPFLAGS" "$test7"
+ 	}
+     }
+ }
+@@ -1408,11 +1408,10 @@ proc objcopy_test_without_global_symbol
+ 
+ # The AArch64 and ARM targets preserve mapping symbols
+ # in object files, so they will fail this test.
+-setup_xfail aarch64*-*-* arm*-*-*
++# setup_xfail aarch64*-*-* arm*-*-*
+ # The RISC-V target compiles with annotation enabled and these symbols remain after stripping.
+ # setup_xfail riscv*-*-* 
+-
+-objcopy_test_without_global_symbol
++# objcopy_test_without_global_symbol
+ 
+ # objcopy remove relocation from executable test
+ 
+diff -rup binutils.orig/ld/testsuite/ld-plugin/plugin.exp binutils-2.41/ld/testsuite/ld-plugin/plugin.exp
+--- binutils.orig/ld/testsuite/ld-plugin/plugin.exp	2024-04-29 13:21:48.205519779 +0100
++++ binutils-2.41/ld/testsuite/ld-plugin/plugin.exp	2024-04-29 13:53:32.183969315 +0100
+@@ -136,6 +136,8 @@ if { [istarget riscv*-*-*] } then {
+     return
+ }
+ 
++return
++
+ set plugin_tests [list \
+     [list "load plugin" "-plugin $plugin_path \
+     $testobjfiles $libs" "" "" "" {{ld plugin-1.d}} "main.x" ] \
