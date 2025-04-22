@@ -9,7 +9,7 @@ BuildRequires: scl-utils-build
 Summary: A GNU collection of binary utilities
 Name: %{?scl_prefix}binutils
 Version: 2.41
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPL-3.0-or-later AND (GPL-3.0-or-later WITH Bison-exception-2.2) AND (LGPL-2.0-or-later WITH GCC-exception-2.0) AND BSD-3-Clause AND GFDL-1.3-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later
 URL: https://sourceware.org/binutils
 
@@ -346,6 +346,8 @@ Patch40: binutils-Intel-APX-CODE_6_GOTTPOFF.patch
 
 Patch41: binutils-extra-testsuite-fixes.patch
 Patch42: binutils-s390-testsuite-fixes.patch
+
+Patch43: binutils-LTO-plugin-common-symbols.patch
 
 # Purpose:  Suppress the x86 linker's p_align-1 tests due to kernel bug on CentOS-10
 # Lifetime: TEMPORARY
@@ -1494,6 +1496,9 @@ exit 0
 
 #----------------------------------------------------------------------------
 %changelog
+* Thu Feb 20 2025 Nick Clifton  <nickc@redhat.com>
+- Backport fixes for PR 32082 and PR 32153 in order to fix the PR 20267 linker tests.
+
 * Fri Aug 16 2024 Nick Clifton  <nickc@redhat.com> - 2.41-3
 - NVR Bump to allow rebuilding with GTS-14 gcc.  (RHEL-53519)
 
