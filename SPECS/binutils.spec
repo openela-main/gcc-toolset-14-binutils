@@ -9,7 +9,7 @@ BuildRequires: scl-utils-build
 Summary: A GNU collection of binary utilities
 Name: %{?scl_prefix}binutils
 Version: 2.41
-Release: 4%{?dist}
+Release: 4%{?dist}.1
 License: GPL-3.0-or-later AND (GPL-3.0-or-later WITH Bison-exception-2.2) AND (LGPL-2.0-or-later WITH GCC-exception-2.0) AND BSD-3-Clause AND GFDL-1.3-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later
 URL: https://sourceware.org/binutils
 
@@ -349,6 +349,12 @@ Patch42: binutils-s390-testsuite-fixes.patch
 
 Patch43: binutils-LTO-plugin-common-symbols.patch
 
+# Purpose:  Stops a potential illegal memory access when linking a corrupt
+#            input file.  PR 33457
+# Lifetime: Fixed in 2.46
+Patch44: binutils-CVE-2025-11083.patch
+
+#----------------------------------------------------------------------------
 # Purpose:  Suppress the x86 linker's p_align-1 tests due to kernel bug on CentOS-10
 # Lifetime: TEMPORARY
 Patch99: binutils-suppress-ld-align-tests.patch
@@ -1496,6 +1502,9 @@ exit 0
 
 #----------------------------------------------------------------------------
 %changelog
+* Thu Nov 27 2025 Nick Clifton  <nickc@redhat.com> - 2.41-3.1
+- Fix a potential illegal memory access when linking a corrupt input file.  (RHEL-130636)
+
 * Thu Feb 20 2025 Nick Clifton  <nickc@redhat.com>
 - Backport fixes for PR 32082 and PR 32153 in order to fix the PR 20267 linker tests.
 
